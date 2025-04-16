@@ -13,54 +13,86 @@ import { Link } from "@heroui/link";
 
 import { useAuth } from "@/AuthContext";
 import getInitialsFromName from "@/utils/get-initials";
+import { NavbarItem } from "@heroui/navbar";
+import { Button } from "@heroui/button";
 
 export function UserMenu() {
-	const { user } = useAuth();
+	const { user, isAuthenticated } = useAuth();
 
 	const router = useRouter();
 
-	const handleSignOut = () => {
-		signOut(auth)
-			.catch((error) => {
-				const errorCode = error.code;
-				const errorMessage = error.message;
-			})
-			.finally(() => {
-				router.push("/");
-			});
+	const handleSignOut = async () => {
+		await signOut(auth);
+
+		router.push("/");
 	};
 
+	const AdminMenuItems = () => (
+		<DropdownMenu variant="flat">
+			<DropdownItem key="reservations" href="/reservations">
+				Foglalások
+			</DropdownItem>
+			<DropdownItem key="items" href="/items">
+				Eszközök
+			</DropdownItem>
+			<DropdownItem key="categories" href="/categories">
+				Kategóriák
+			</DropdownItem>
+			<DropdownItem key="users" href="/users">
+				Felhasználók
+			</DropdownItem>
+			<DropdownItem key="settings" href="/settings">
+				Beállítások
+			</DropdownItem>
+			<DropdownItem key="sign-out" color="danger">
+				<Link color="danger" size="sm" onPress={handleSignOut}>
+					Kijelentkezés
+				</Link>
+			</DropdownItem>
+		</DropdownMenu>
+	);
+
+	const UserMenuItems = () => (
+		<DropdownMenu variant="flat">
+			<DropdownItem key="items" href="/items">
+				Eszközök
+			</DropdownItem>
+			<DropdownItem key="settings" href="/settings">
+				Beállítások
+			</DropdownItem>
+			<DropdownItem key="sign-out" color="danger">
+				<Link color="danger" size="sm" onPress={handleSignOut}>
+					Kijelentkezés
+				</Link>
+			</DropdownItem>
+		</DropdownMenu>
+	);
+
+	if (isAuthenticated) {
+		return (
+			<Dropdown placement="bottom-end">
+				<DropdownTrigger>
+					<Avatar as="button" name={getInitialsFromName(user.name)} />
+				</DropdownTrigger>
+
+				{user.role === "admin" && <AdminMenuItems />}
+				{user.role === "user" && <UserMenuItems />}
+			</Dropdown>
+		);
+	}
+
 	return (
-		<Dropdown placement="bottom-end">
-			<DropdownTrigger>
-				<Avatar as="button" name={getInitialsFromName(user.name)} />
-			</DropdownTrigger>
-			<DropdownMenu variant="flat">
-				<DropdownItem key="reservations" href="/reservations">
-					Foglalások
-				</DropdownItem>
-				<DropdownItem key="items" href="/items">
-					Eszközök
-				</DropdownItem>
-				<DropdownItem key="categories" href="/categories">
-					Kategóriák
-				</DropdownItem>
-				<DropdownItem key="users" href="/users">
-					Felhasználók
-				</DropdownItem>
-				<DropdownItem key="settings" href="/settings">
-					Beállítások
-				</DropdownItem>
-				<DropdownItem
-					key="sign-out"
-					color="danger"
-					onPress={(e) => handleSignOut()}
-				>
-					<Link color="danger" size="sm">
-						Kijelentkezés
-					</Link>
-				</DropdownItem>
-			</DropdownMenu>
-		</Dropdown>
+		<>
+			<NavbarItem>
+				<Link color="foreground" href="sign-up">
+					Regisztráció
+				</Link>
+			</NavbarItem>
+			<NavbarItem>
+				<Button as={Link} color="primary" variant="flat" href="sign-in">
+					Bejelentkezés
+				</Button>
+			</NavbarItem>
+		</>
 	);
 }

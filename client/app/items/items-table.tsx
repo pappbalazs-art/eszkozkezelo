@@ -49,6 +49,7 @@ import { DateValue } from "@heroui/calendar";
 import { getLocalTimeZone, parseDate, today } from "@internationalized/date";
 import { DatePicker } from "@heroui/react";
 import ItemDetailsModal from "./item-details-modal";
+import { useAuth } from "@/AuthContext";
 
 export const columns = [
 	{ name: "NÉV", uid: "name", sortable: true },
@@ -58,6 +59,8 @@ export const columns = [
 ];
 
 export default function ItemsTable() {
+	const { user } = useAuth();
+
 	const [items, setItems] = useState<any>([]);
 	const [categories, setCategories] = useState<any>([]);
 	const [loading, setLoading] = useState<boolean>(true);
@@ -257,27 +260,32 @@ export default function ItemsTable() {
 									>
 										Részletek
 									</DropdownItem>
-									<DropdownItem
-										key="edit"
-										onPress={() => {
-											setSelectedItem(item);
-											editItemModalDisclosure.onOpen();
-										}}
-									>
-										Szerkesztés
-									</DropdownItem>
-									<DropdownItem
-										key="delete"
-										color="danger"
-										onPress={() => {
-											setSelectedItem(item);
-											deleteItemModalDisclosure.onOpen();
-										}}
-									>
-										<Link color="danger" size="sm">
-											Törlés
-										</Link>
-									</DropdownItem>
+
+									{user.role === "admin" ? (
+										<>
+											<DropdownItem
+												key="edit"
+												onPress={() => {
+													setSelectedItem(item);
+													editItemModalDisclosure.onOpen();
+												}}
+											>
+												Szerkesztés
+											</DropdownItem>
+											<DropdownItem
+												key="delete"
+												color="danger"
+												onPress={() => {
+													setSelectedItem(item);
+													deleteItemModalDisclosure.onOpen();
+												}}
+											>
+												<Link color="danger" size="sm">
+													Törlés
+												</Link>
+											</DropdownItem>
+										</>
+									) : null}
 								</DropdownMenu>
 							</Dropdown>
 						</div>
@@ -367,13 +375,15 @@ export default function ItemsTable() {
 							</DropdownMenu>
 						</Dropdown>
 
-						<Button
-							color="primary"
-							endContent={<PlusIcon />}
-							onPress={createItemModalDisclosure.onOpen}
-						>
-							Új hozzáadása
-						</Button>
+						{user.role === "admin" && (
+							<Button
+								color="primary"
+								endContent={<PlusIcon />}
+								onPress={createItemModalDisclosure.onOpen}
+							>
+								Új hozzáadása
+							</Button>
+						)}
 					</div>
 				</div>
 			</div>

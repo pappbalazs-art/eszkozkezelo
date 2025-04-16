@@ -58,6 +58,7 @@ export default function SignUpPage() {
 
 				const docRef = addDoc(collection(database, "users"), {
 					user_uid: userID,
+					email: form.email,
 					name: form.firstname + " " + form.lastname,
 					neptun_code: form.neptunCode,
 					role: "user",

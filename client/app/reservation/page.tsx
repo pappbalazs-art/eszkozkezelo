@@ -18,8 +18,9 @@ import ReservationTable from "./reservation-table";
 import { Button } from "@heroui/button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Card, CardBody } from "@heroui/card";
+import withAuth from "@/utils/withAuth";
 
-export default function ReservationPage() {
+const ReservationPage = () => {
 	const [reservation, setReservation] = useState<any>();
 	const [user, setUser] = useState<any>();
 	const [loading, setLoading] = useState<boolean>(true);
@@ -87,12 +88,14 @@ export default function ReservationPage() {
 						setSelectedItems={setSelectedItems}
 					/>
 
-					<Card className="mt-8 p-2" shadow="sm">
-						<CardBody>
-							<span className="font-bold">Megjegyzés: </span>
-							{reservation.comment}
-						</CardBody>
-					</Card>
+					{reservation.comment && (
+						<Card className="mt-8 p-2" shadow="sm">
+							<CardBody>
+								<span className="font-bold">Megjegyzés: </span>
+								{reservation.comment}
+							</CardBody>
+						</Card>
+					)}
 				</div>
 
 				<div className="flex justify-end gap-2 pt-8">
@@ -106,4 +109,6 @@ export default function ReservationPage() {
 			</>
 		)
 	);
-}
+};
+
+export default withAuth(ReservationPage);

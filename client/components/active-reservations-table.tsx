@@ -19,7 +19,7 @@ import {
 	where,
 } from "firebase/firestore";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { VerticalDotsIcon } from "./icons";
+import { PlusIcon, VerticalDotsIcon } from "./icons";
 import ViewReservationModal from "@/app/reservations/view-reservation-modal";
 import {
 	Table,
@@ -30,6 +30,8 @@ import {
 	TableRow,
 } from "@heroui/table";
 import { Spinner } from "@heroui/spinner";
+import { Link } from "@heroui/link";
+import { useAuth } from "@/AuthContext";
 
 export const columns = [
 	{ name: "NÉV", uid: "name" },
@@ -39,6 +41,8 @@ export const columns = [
 ];
 
 export default function ActiveReservationsTable() {
+	const { user, isAuthenticated } = useAuth();
+
 	const [reservations, setReservations] = useState<any>([]);
 	const [selectedReservation, setSelectedReservation] = useState(null);
 	const [loading, setLoading] = useState<boolean>(true);
@@ -69,28 +73,57 @@ export default function ActiveReservationsTable() {
 	};
 
 	const updateReservations = async () => {
-		const currentDate = today(getLocalTimeZone());
-		const currentTimestamp = Timestamp.fromDate(
-			new Date(currentDate.year, currentDate.month - 1, currentDate.day)
-		);
+		if (user.role === "admin") {
+			const currentDate = today(getLocalTimeZone());
+			const currentTimestamp = Timestamp.fromDate(
+				new Date(
+					currentDate.year,
+					currentDate.month - 1,
+					currentDate.day
+				)
+			);
 
-		const reservationsRef = collection(database, "reservations");
-		const reservationsQuery = query(
-			reservationsRef,
-			where("from_timestamp", "<=", currentTimestamp),
-			where("to_timestamp", ">=", currentTimestamp)
-		);
-		const reservationsSnapshot = await getDocs(reservationsQuery);
+			const reservationsRef = collection(database, "reservations");
+			const reservationsQuery = query(
+				reservationsRef,
+				where("from_timestamp", "<=", currentTimestamp),
+				where("to_timestamp", ">=", currentTimestamp)
+			);
+			const reservationsSnapshot = await getDocs(reservationsQuery);
 
-		setReservations(
-			reservationsSnapshot.docs
-				.map((doc: any) => ({
+			setReservations(
+				reservationsSnapshot.docs
+					.map((doc: any) => ({
+						...doc.data(),
+						id: doc.id,
+					}))
+					.filter(
+						(reservation: any) => reservation.status === "accepted"
+					)
+			);
+			setLoading(false);
+
+			return;
+		}
+
+		if (user.role === "user") {
+			const reservationsRef = collection(database, "reservations");
+			const reservationsQuery = query(
+				reservationsRef,
+				where("user_uid", "==", user.user_uid)
+			);
+			const reservationSnapshot = await getDocs(reservationsQuery);
+
+			setReservations(
+				reservationSnapshot.docs.map((doc: any) => ({
 					...doc.data(),
 					id: doc.id,
 				}))
-				.filter((reservation: any) => reservation.status === "accepted")
-		);
-		setLoading(false);
+			);
+			setLoading(false);
+
+			return;
+		}
 	};
 
 	useEffect(() => {
@@ -138,6 +171,28 @@ export default function ActiveReservationsTable() {
 		}
 	}, []);
 
+	const topContent = useMemo(() => {
+		return (
+			<div className="flex flex-col gap-4">
+				<div className="flex justify-between gap-3 items-end">
+					<h1 className="tracking-tight inline font-bold text-3xl">
+						{user.role === "admin" && "Aktív foglalások"}
+						{user.role === "user" && "Foglalásaim"}
+					</h1>
+
+					<Button
+						as={Link}
+						color="primary"
+						endContent={<PlusIcon />}
+						href="/reserve"
+					>
+						Új foglalás
+					</Button>
+				</div>
+			</div>
+		);
+	}, [reservations]);
+
 	return (
 		<>
 			<ViewReservationModal
@@ -148,10 +203,11 @@ export default function ActiveReservationsTable() {
 			/>
 
 			<Table
-				className="pt-8"
 				isHeaderSticky
 				isStriped
 				sortDescriptor={sortDescriptor}
+				topContent={topContent}
+				topContentPlacement="outside"
 				onSortChange={setSortDescriptor}
 				removeWrapper
 			>

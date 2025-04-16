@@ -25,10 +25,10 @@ import { useAuth } from "@/AuthContext";
 import { database } from "@/firebase";
 import getDateStringFromTimestamp from "@/utils/date-string-from-timestamp";
 import { Textarea } from "@heroui/input";
-import { sendForm } from "emailjs-com";
-import axios from "axios";
+import withAuth from "@/utils/withAuth";
+import { sendEmail } from "@/utils/send-email";
 
-export default function UsersPage() {
+const ReservePage = () => {
 	const { user } = useAuth();
 
 	const [dateRange, setDateRange] = useState<any>();
@@ -113,19 +113,11 @@ export default function UsersPage() {
 			items: Array.from(selectedItems),
 			comment: comment,
 		});
-
-		const fetchParams = new FormData();
-		fetchParams.append("email", "hello@pappbalazs.com");
-		fetchParams.append("subject", "Megerősítés új foglalásról");
-		fetchParams.append("message", "Sikeresen leadtál egy új foglalást!");
-
-		const response = await fetch("https://pappbalazs.com/api/message", {
-			method: "POST",
-			mode: "no-cors",
-			body: fetchParams,
-		});
-
-		console.log(response);
+		await sendEmail(
+			user.email,
+			"Megerősítés új foglalásról",
+			'<div style="display: flex; padding: 25px; background-color: #ff0000;"><h1>Új foglalás</h1><p>Sikeresen leadtál egy új foglalást</p></div>'
+		);
 	};
 
 	const renderCurrentStep = () => {
@@ -273,4 +265,6 @@ export default function UsersPage() {
 			{renderButtons()}
 		</>
 	);
-}
+};
+
+export default withAuth(ReservePage);

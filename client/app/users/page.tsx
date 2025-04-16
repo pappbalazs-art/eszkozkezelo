@@ -1,9 +1,10 @@
 "use client";
 
+import withAuth from "@/utils/withAuth";
 import UsersTable from "./users-table";
 import { Spacer } from "@heroui/spacer";
 
-export default function UsersPage() {
+const UsersPage = () => {
 	return (
 		<>
 			<h1 className="tracking-tight inline font-bold text-3xl">
@@ -15,4 +16,6 @@ export default function UsersPage() {
 			<UsersTable />
 		</>
 	);
-}
+};
+
+export default withAuth(UsersPage);

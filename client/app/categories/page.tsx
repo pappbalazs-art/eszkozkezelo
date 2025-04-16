@@ -1,9 +1,10 @@
 "use client";
 
+import withAuth from "@/utils/withAuth";
 import CategoriesTable from "./categories-table";
 import { Spacer } from "@heroui/spacer";
 
-export default function CategoriesPage() {
+const CategoriesPage = () => {
 	return (
 		<>
 			<h1 className="tracking-tight inline font-bold text-3xl">
@@ -15,4 +16,6 @@ export default function CategoriesPage() {
 			<CategoriesTable />
 		</>
 	);
-}
+};
+
+export default withAuth(CategoriesPage);

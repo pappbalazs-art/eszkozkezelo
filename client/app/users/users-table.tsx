@@ -3,8 +3,8 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Selection, SortDescriptor } from "@heroui/react";
 
-import { database } from "@/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { auth, database } from "@/firebase";
+import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
 
 import {
 	Dropdown,
@@ -30,6 +30,7 @@ import {
 	TableRow,
 } from "@heroui/table";
 import { Spinner } from "@heroui/spinner";
+import { sendEmail } from "@/utils/send-email";
 
 export const columns = [
 	{ name: "NÉV", uid: "name", sortable: true },
@@ -130,17 +131,27 @@ export default function UsersTable() {
 		setFilterValue("");
 	}, []);
 
+	const updateUsers = async () => {
+		const snapshot = await getDocs(collection(database, "users"));
+
+		setUsers(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+		setLoading(false);
+	};
+
+	const handleSetUserStatusToActive = async (user: any) => {
+		await updateDoc(doc(database, "users", user.id), {
+			status: "active",
+		});
+		await sendEmail(
+			user.email,
+			"Fiók aktiválása",
+			"Sikeresen aktiválva lett a fiókod!"
+		);
+		await updateUsers();
+	};
+
 	useEffect(() => {
-		const fetchUsers = async () => {
-			const snapshot = await getDocs(collection(database, "users"));
-
-			setUsers(
-				snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-			);
-			setLoading(false);
-		};
-
-		fetchUsers();
+		updateUsers();
 	}, []);
 
 	const renderCell = useCallback((user: any, columnKey: React.Key) => {
@@ -180,6 +191,16 @@ export default function UsersTable() {
 								<DropdownItem key="view" onPress={() => null}>
 									Megtekintés
 								</DropdownItem>
+								{user.status === "inactive" ? (
+									<DropdownItem
+										key="set-user-status-to-active"
+										onPress={() =>
+											handleSetUserStatusToActive(user)
+										}
+									>
+										Megjelölés aktívként
+									</DropdownItem>
+								) : null}
 							</DropdownMenu>
 						</Dropdown>
 					</div>
