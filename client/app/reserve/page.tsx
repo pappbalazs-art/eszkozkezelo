@@ -27,6 +27,7 @@ import getDateStringFromTimestamp from "@/utils/date-string-from-timestamp";
 import { Textarea } from "@heroui/input";
 import withAuth from "@/utils/withAuth";
 import { sendEmail } from "@/utils/send-email";
+import { buildReserveEmailMessageForUser } from "@/utils/email-builders";
 
 const ReservePage = () => {
 	const { user } = useAuth();
@@ -113,10 +114,16 @@ const ReservePage = () => {
 			items: Array.from(selectedItems),
 			comment: comment,
 		});
+
 		await sendEmail(
 			user.email,
-			"Megerősítés új foglalásról",
-			'<div style="display: flex; padding: 25px; background-color: #ff0000;"><h1>Új foglalás</h1><p>Sikeresen leadtál egy új foglalást</p></div>'
+			"Foglalás megerősítése",
+			buildReserveEmailMessageForUser(
+				fromTimestamp,
+				toTimestamp,
+				categoryList,
+				selectedItemsData
+			)
 		);
 	};
 
