@@ -12,7 +12,12 @@ import { onAuthStateChanged, User as FirebaseUser } from "firebase/auth";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { auth, database } from "@/firebase";
 import { User } from "@/types/user";
-import { AuthContextType } from "@/types/auth-context";
+
+type AuthContextType = {
+	userImpl: FirebaseUser | undefined | null;
+	user: User | undefined;
+	isAuthenticated: boolean;
+};
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
