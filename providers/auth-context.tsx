@@ -29,8 +29,8 @@ export const AuthProvider = ({ children }: AuthProviderProps): ReactNode => {
 		undefined
 	);
 	const [user, setUser] = useState<User | undefined>(undefined);
-	const [isAuthenticated, setIsAuthenticated] = useState<Boolean>(false);
-	const [loading, setLoading] = useState<Boolean>(true);
+	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+	const [loading, setLoading] = useState<boolean>(true);
 
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(

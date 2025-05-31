@@ -8,7 +8,7 @@ interface DynamicProps {
 }
 
 const Dynamic = ({ children }: DynamicProps): ReactNode => {
-	const [hasMounted, setHasMounted] = useState<Boolean>(false);
+	const [hasMounted, setHasMounted] = useState<boolean>(false);
 
 	useEffect(() => {
 		setHasMounted(true);
