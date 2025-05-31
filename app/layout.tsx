@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Rubik } from "next/font/google";
 import { Providers } from "./providers";
 import { Navbar } from "@/components/navbar";
 
@@ -37,6 +38,10 @@ export const viewport: Viewport = {
 	userScalable: false,
 };
 
+const rubik = Rubik({
+	subsets: ["latin"],
+});
+
 export default function RootLayout({
 	children,
 }: Readonly<{
@@ -44,7 +49,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html>
-			<body>
+			<body className={rubik.className}>
 				<Providers>
 					<Navbar />
 
