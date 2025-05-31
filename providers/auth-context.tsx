@@ -14,11 +14,7 @@ import { auth, database } from "@/firebase";
 import { User } from "@/types/user";
 import { AuthContextType } from "@/types/auth-context";
 
-const AuthContext = createContext<AuthContextType>({
-	userImpl: undefined,
-	user: undefined,
-	isAuthenticated: false,
-});
+const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 type AuthProviderProps = {
 	children: ReactNode;
