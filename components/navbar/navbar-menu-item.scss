@@ -1,0 +1,8 @@
+@use "@/styles/mixins.scss";
+
+.navbar__menu__item {
+	@include mixins.breakpoint(medium) {
+		width: 90vw;
+		font-size: 1.3em;
+	}
+}

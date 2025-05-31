@@ -1,0 +1,13 @@
+@use "@/styles/colors.scss";
+@use "@/styles/variables.scss";
+
+.navbar__wrapper {
+	position: fixed;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	width: 100%;
+	height: variables.$navbar-height;
+	background: colors.$background;
+	border-bottom: 1px solid colors.$border-color;
+}

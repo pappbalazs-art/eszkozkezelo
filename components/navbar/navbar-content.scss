@@ -1,0 +1,12 @@
+@use "@/styles/mixins.scss";
+
+.navbar__content {
+	display: flex;
+	flex-direction: row;
+	gap: 1.2rem;
+	list-style: none;
+
+	@include mixins.breakpoint(medium) {
+		display: none;
+	}
+}

@@ -1,0 +1,44 @@
+@use "sass:color";
+@use "@/styles/colors";
+
+.button {
+	padding: 0.8rem 1rem;
+	cursor: pointer;
+	border-radius: 13px;
+	color: var(--foreground);
+	transition: background-color 0.2s ease-in-out;
+
+	&--solid {
+		&.button--primary {
+			background: colors.$primary;
+
+			&:hover {
+				background: color.adjust(colors.$primary, $lightness: -5%);
+			}
+		}
+
+		&.button--success {
+			background: colors.$success;
+
+			&:hover {
+				background: color.adjust(colors.$success, $lightness: -5%);
+			}
+		}
+
+		&.button--warning {
+			background: colors.$warning;
+
+			&:hover {
+				background: color.adjust(colors.$warning, $lightness: -5%);
+			}
+		}
+
+		&.button--danger {
+			background: colors.$danger;
+
+			&:hover {
+				background: color.adjust(colors.$danger, $lightness: -5%);
+			}
+		}
+	}
+}

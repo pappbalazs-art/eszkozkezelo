@@ -1,0 +1,27 @@
+@use "@/styles/colors.scss";
+@use "@/styles/variables.scss";
+@use "@/styles/mixins.scss";
+
+.navbar__menu__container {
+	display: none;
+	flex-direction: row;
+	list-style: none;
+	position: absolute;
+	top: variables.$navbar-height;
+	left: 0;
+	flex-direction: column;
+	align-items: center;
+	width: 100vw;
+	height: calc(100vh - variables.$navbar-height);
+	background: colors.$background;
+	transform: translateX(-100%);
+	transition: transform 0.2s ease-in-out;
+
+	@include mixins.breakpoint(medium) {
+		display: flex;
+
+		.navbar__wrapper.open & {
+			transform: translateX(0);
+		}
+	}
+}

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Providers } from "./providers";
+import { Navbar } from "@/components/navbar";
 
 import "@/styles/normalize.scss";
 import "@/styles/globals.scss";
@@ -45,6 +46,8 @@ export default function RootLayout({
 		<html>
 			<body>
 				<Providers>
+					<Navbar />
+
 					<main className="wrapper">{children}</main>
 				</Providers>
 			</body>

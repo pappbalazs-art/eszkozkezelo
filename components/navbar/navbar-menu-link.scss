@@ -1,0 +1,24 @@
+@use "@/styles/colors.scss";
+
+.navbar__menu__link {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	padding: 0.5rem 0;
+
+	&.color-primary {
+		color: colors.$primary;
+	}
+
+	&.color-success {
+		color: colors.$success;
+	}
+
+	&.color-warning {
+		color: colors.$warning;
+	}
+
+	&.color-danger {
+		color: colors.$danger;
+	}
+}

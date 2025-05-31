@@ -1,0 +1,58 @@
+@use "@/styles/colors.scss";
+@use "@/styles/mixins.scss";
+
+.navbar__toggle {
+	display: none;
+	position: relative;
+	top: 0;
+	width: 30px;
+	height: 20px;
+	background: transparent;
+	cursor: pointer;
+	z-index: 2;
+
+	@include mixins.breakpoint(medium) {
+		display: inherit;
+	}
+
+	&__line {
+		&--top {
+			top: 0;
+
+			.navbar__wrapper.open & {
+				top: 9px;
+				transform: rotate(135deg);
+			}
+		}
+
+		&--middle {
+			top: 9px;
+
+			.navbar__wrapper.open & {
+				transform: scaleX(0);
+				opacity: 0;
+			}
+		}
+
+		&--bottom {
+			top: 18px;
+
+			.navbar__wrapper.open & {
+				transform: rotate(-135deg);
+				top: 9px;
+			}
+		}
+	}
+}
+
+[class*="navbar__toggle__line"] {
+	display: block;
+	position: absolute;
+	left: 0;
+	width: 30px;
+	height: 2px;
+	background: colors.$foreground;
+	transform: rotate(0);
+	transition: transform 0.2s ease-in-out, top 0.2s ease-in-out,
+		opacity 0.2s ease-in-out;
+}
