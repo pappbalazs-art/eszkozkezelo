@@ -1,0 +1,21 @@
+@use "@/styles/colors.scss";
+@use "@/styles/mixins.scss";
+
+.card {
+	background: colors.$element-background-primary;
+	padding: 35px;
+	border-radius: 25px;
+	width: calc(90vw - 70px);
+	max-width: 400px;
+
+	@include mixins.breakpoint(small) {
+		padding: 25px;
+		width: calc(95vw - 50px);
+	}
+
+	&__container {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+}

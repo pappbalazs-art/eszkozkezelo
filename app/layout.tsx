@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Rubik } from "next/font/google";
+import { Inter } from "next/font/google";
 import { Providers } from "./providers";
 import { Navbar } from "@/components/navbar";
 
@@ -38,8 +38,9 @@ export const viewport: Viewport = {
 	userScalable: false,
 };
 
-const rubik = Rubik({
+const inter = Inter({
 	subsets: ["latin"],
+	weight: ["500", "800"],
 });
 
 export default function RootLayout({
@@ -49,7 +50,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html>
-			<body className={rubik.className}>
+			<body className={inter.className}>
 				<Providers>
 					<Navbar />
 

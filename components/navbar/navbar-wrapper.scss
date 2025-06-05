@@ -8,6 +8,6 @@
 	justify-content: center;
 	width: 100%;
 	height: variables.$navbar-height;
-	background: colors.$background;
-	border-bottom: 1px solid colors.$border-color;
+	background: colors.$element-background-primary;
+	z-index: 9999;
 }

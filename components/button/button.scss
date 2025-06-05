@@ -1,44 +1,56 @@
 @use "sass:color";
 @use "@/styles/colors";
 
+@mixin button-background($color) {
+	background: $color;
+
+	&:disabled {
+		background: color.adjust($color, $lightness: 10%);
+	}
+
+	&:not(:disabled):hover {
+		background: color.adjust($color, $lightness: -5%);
+	}
+}
+
 .button {
-	padding: 0.8rem 1rem;
+	color: colors.$background;
+	padding: 1rem 1.5em;
+	border-radius: 3rem;
 	cursor: pointer;
-	border-radius: 13px;
-	color: var(--foreground);
 	transition: background-color 0.2s ease-in-out;
+
+	&__container {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+	}
+
+	&--full-width {
+		width: 100%;
+	}
+
+	&:disabled {
+		cursor: default;
+	}
 
 	&--solid {
 		&.button--primary {
-			background: colors.$primary;
-
-			&:hover {
-				background: color.adjust(colors.$primary, $lightness: -5%);
-			}
+			@include button-background(colors.$primary);
 		}
 
 		&.button--success {
-			background: colors.$success;
-
-			&:hover {
-				background: color.adjust(colors.$success, $lightness: -5%);
-			}
+			@include button-background(colors.$success);
 		}
 
 		&.button--warning {
-			background: colors.$warning;
-
-			&:hover {
-				background: color.adjust(colors.$warning, $lightness: -5%);
-			}
+			@include button-background(colors.$warning);
 		}
 
 		&.button--danger {
-			background: colors.$danger;
-
-			&:hover {
-				background: color.adjust(colors.$danger, $lightness: -5%);
-			}
+			@include button-background(colors.$danger);
 		}
 	}
 }

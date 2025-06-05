@@ -1,0 +1,11 @@
+@use "@/styles/variables.scss";
+
+.container {
+	display: flex;
+	justify-content: center;
+	height: calc(100vh - variables.$navbar-height);
+
+	&--centered {
+		align-items: center;
+	}
+}

@@ -1,0 +1,131 @@
+@use "@/styles/colors";
+
+.input {
+	position: relative;
+	width: 100%;
+
+	&:not(.input--full-width) {
+		max-width: 250px;
+	}
+
+	&--solid:has(.input__label--outside):has(+ .input) {
+		margin-bottom: 1rem;
+	}
+
+	&__field {
+		&[type="text"],
+		&[type="email"],
+		&[type="password"],
+		&[type="search"] {
+			width: calc(100% - 1.5rem * 2);
+			padding: 1rem 1.5rem;
+			border-radius: 3rem;
+			transition: background-color 0.2s, border 0.2s;
+		}
+
+		&:-webkit-autofill {
+			&,
+			&:hover,
+			&:focus {
+				-webkit-text-fill-color: colors.$foreground;
+			}
+		}
+
+		.input--solid & {
+			background: colors.$background;
+			border: 2px solid colors.$background;
+
+			&:-webkit-autofill {
+				&,
+				&:hover,
+				&:focus {
+					-webkit-box-shadow: 0 0 0 40rem colors.$background inset;
+				}
+			}
+		}
+
+		.input--bordered & {
+			border: 2px solid colors.$element-foreground-secondary;
+
+			&:-webkit-autofill {
+				&,
+				&:hover,
+				&:focus {
+					-webkit-box-shadow: 0 0 0 40rem
+						colors.$element-background-primary inset;
+				}
+			}
+		}
+
+		&:focus {
+			border: 2px solid colors.$primary;
+		}
+	}
+
+	&__label {
+		position: absolute;
+		top: calc(1rem + 2px);
+		left: calc(1.5rem - 2px);
+		color: colors.$element-foreground-primary;
+		cursor: text;
+		transition: top 0.15s, left 0.15s, font-size 0.15s,
+			background-color 0.15s;
+
+		.input--bordered & {
+			padding: 0 0.3rem;
+		}
+
+		.input--required &::after {
+			content: "*";
+			color: colors.$danger;
+			margin-left: 0.1rem;
+		}
+
+		.input__field:not([value=""]) + &--inside {
+			visibility: hidden;
+		}
+
+		.input--solid .input__field:not([value=""]) + &--outside,
+		.input--solid .input__field:focus + &--outside {
+			top: -1.25rem;
+			left: 0;
+			font-size: 0.8rem;
+		}
+
+		.input--bordered .input__field:not([value=""]) + &--outside,
+		.input--bordered .input__field:focus + &--outside {
+			top: -0.35rem;
+			font-size: 0.8rem;
+			background-color: colors.$element-background-primary;
+		}
+
+		.input__field:focus + & {
+			color: colors.$primary;
+		}
+	}
+
+	&[data-error] {
+		.input__field {
+			margin-bottom: 0.25rem;
+		}
+
+		&.input--solid .input__field {
+			background: colors.$danger-light;
+			border: 2px solid colors.$danger-light;
+		}
+
+		&.input--bordered .input__field {
+			border: 2px solid colors.$danger;
+		}
+
+		.input__label {
+			color: colors.$danger;
+		}
+
+		&::after {
+			content: attr(data-error);
+			font-size: 0.8rem;
+			color: colors.$danger;
+		}
+	}
+}
