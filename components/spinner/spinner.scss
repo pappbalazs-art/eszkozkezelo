@@ -1,6 +1,7 @@
 @use "@/styles/colors.scss";
 
 .spinner {
+	display: block;
 	aspect-ratio: 1;
 	width: 1.5rem;
 	border: 4px solid colors.$primary;
