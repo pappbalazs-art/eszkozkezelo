@@ -1,0 +1,26 @@
+@use "sass:color";
+@use "@/styles/colors";
+
+.sidebar__menu__link {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 0.5rem;
+	width: 100%;
+	padding: 0.6rem 1.2rem;
+	border-radius: 3rem;
+	font-size: 0.9rem;
+	transition: background-color 0.2s ease-in-out;
+
+	&:hover {
+		background: colors.$element-background-secondary;
+	}
+
+	&.active {
+		background: color.adjust(colors.$primary, $lightness: 30%);
+	}
+
+	.icon {
+		fill: colors.$foreground;
+	}
+}
