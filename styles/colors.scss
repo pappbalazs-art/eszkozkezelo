@@ -2,6 +2,7 @@
 
 $background: #fafafa;
 $element-background-primary: color.adjust($background, $lightness: 3%);
+$element-background-secondary: color.adjust($background, $lightness: -2%);
 $foreground: #010101;
 $element-foreground-primary: color.adjust($foreground, $lightness: 50%);
 $element-foreground-secondary: color.adjust($foreground, $lightness: 80%);

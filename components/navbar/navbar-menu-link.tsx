@@ -13,8 +13,8 @@ type NavbarMenuLinkProps = {
 };
 
 export default function NavbarMenuLink({
-	color,
 	href,
+	color,
 	children,
 }: NavbarMenuLinkProps): ReactNode {
 	const { closeMenu } = useContext(NavbarContext);

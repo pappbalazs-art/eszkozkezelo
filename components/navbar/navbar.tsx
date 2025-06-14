@@ -9,6 +9,7 @@ import NavbarLink from "./navbar-link";
 import NavbarToggle from "./navbar-toggle";
 
 import NoAuthNavbarContent from "./navbar-contents/no-auth-navbar-content";
+import AdminNavbarContent from "./navbar-contents/admin-navbar-content";
 
 type NavbarContextType = {
 	isMenuOpen: boolean;
@@ -23,7 +24,7 @@ export const NavbarContext = createContext<NavbarContextType>(
 export default function Navbar(): ReactNode {
 	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
-	const { isAuthenticated } = useAuth();
+	const { user, isAuthenticated } = useAuth();
 
 	const toggleMenu = (): void => {
 		setIsMenuOpen(!isMenuOpen);
@@ -47,7 +48,9 @@ export default function Navbar(): ReactNode {
 
 	const getNavbarContent = (): ReactNode => {
 		if (isAuthenticated) {
-			return;
+			if (user?.role === "admin") {
+				return <AdminNavbarContent />;
+			}
 		}
 
 		return <NoAuthNavbarContent />;
