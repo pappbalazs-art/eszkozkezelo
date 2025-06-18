@@ -5,7 +5,7 @@
 	width: 100%;
 
 	&:not(.input--full-width) {
-		max-width: 250px;
+		max-width: 350px;
 	}
 
 	&--solid:has(.input__label--outside):has(+ .input) {
@@ -13,15 +13,10 @@
 	}
 
 	&__field {
-		&[type="text"],
-		&[type="email"],
-		&[type="password"],
-		&[type="search"] {
-			width: calc(100% - 1.5rem * 2);
-			padding: 1rem 1.5rem;
-			border-radius: 3rem;
-			transition: background-color 0.2s, border 0.2s;
-		}
+		width: calc(100% - 1.5rem * 2);
+		padding: 1rem 1.5rem;
+		border-radius: 3rem;
+		transition: background-color 0.2s, border 0.2s;
 
 		&:-webkit-autofill {
 			&,
@@ -29,6 +24,10 @@
 			&:focus {
 				-webkit-text-fill-color: colors.$foreground;
 			}
+		}
+
+		.input--compact & {
+			padding: 0.6rem 1.5rem;
 		}
 
 		.input--solid & {
@@ -71,6 +70,10 @@
 		transition: top 0.15s, left 0.15s, font-size 0.15s,
 			background-color 0.15s;
 
+		.input--compact & {
+			top: calc(0.6rem + 4px);
+		}
+
 		.input--bordered & {
 			padding: 0 0.3rem;
 		}
@@ -95,6 +98,7 @@
 		.input--bordered .input__field:not([value=""]) + &--outside,
 		.input--bordered .input__field:focus + &--outside {
 			top: -0.35rem;
+			left: calc(1.5rem - 2px);
 			font-size: 0.8rem;
 			background-color: colors.$element-background-primary;
 		}

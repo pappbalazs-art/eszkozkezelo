@@ -28,8 +28,8 @@ export default function SidebarMenuLink({
 
 	return (
 		<Link className={getClassNames()} href={href}>
-			{<icon.type size={0.9} sizeUnit="rem" />}
-			<span>{children}</span>
+			{<icon.type size={15} />}
+			<span className="sidebar__menu__link__label">{children}</span>
 		</Link>
 	);
 }

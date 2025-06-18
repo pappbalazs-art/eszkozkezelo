@@ -1,0 +1,36 @@
+@use "@/styles/colors";
+
+@mixin table-row-border-radius($size) {
+	.table__column {
+		&:first-child {
+			border-top-left-radius: $size;
+			border-bottom-left-radius: $size;
+		}
+
+		&:last-child {
+			border-top-right-radius: $size;
+			border-bottom-right-radius: $size;
+		}
+	}
+}
+
+.table__row {
+	@include table-row-border-radius(3rem);
+
+	&:nth-child(even) {
+		background: colors.$element-background-secondary;
+	}
+
+	.table__wrapper:not(.animations-ended) & {
+		animation-name: fade-down;
+		animation-duration: 0.25s;
+		animation-fill-mode: backwards;
+		animation-timing-function: ease-out;
+	}
+
+	@for $i from 1 through 100 {
+		&:nth-child(#{$i}) {
+			animation-delay: #{$i * 0.025}s;
+		}
+	}
+}

@@ -1,9 +1,14 @@
 "use client";
 
 import { ReactNode } from "react";
+import { Container, ContainerTitle } from "@/components/container";
 
 function HomePage(): ReactNode {
-	return <p>This is the home page.</p>;
+	return (
+		<Container>
+			<ContainerTitle>Kezdőlap</ContainerTitle>
+		</Container>
+	);
 }
 
 export default HomePage;

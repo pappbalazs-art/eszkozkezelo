@@ -1,14 +1,11 @@
 import { IconProps } from "@/types/icon-props";
 import { ReactNode } from "react";
 
-export default function SignOutIcon({
-	size = 1,
-	sizeUnit = "rem",
-}: IconProps): ReactNode {
+export default function SignOutIcon({ size = 14 }: IconProps): ReactNode {
 	return (
 		<svg
 			className="icon icon--sign-out"
-			height={size + sizeUnit}
+			height={size + "px"}
 			aria-hidden="true"
 			focusable="false"
 			role="img"

@@ -1,0 +1,24 @@
+@use "@/styles/colors";
+
+@mixin table-head-border-radius($size) {
+	.table__head__item {
+		&:first-child {
+			border-top-left-radius: $size;
+			border-bottom-left-radius: $size;
+		}
+
+		&:last-child {
+			border-top-right-radius: $size;
+			border-bottom-right-radius: $size;
+		}
+	}
+}
+
+.table__head {
+	background: colors.$element-background-secondary;
+	animation-name: fade;
+	animation-duration: 0.35s;
+	animation-fill-mode: backwards;
+
+	@include table-head-border-radius(3rem);
+}

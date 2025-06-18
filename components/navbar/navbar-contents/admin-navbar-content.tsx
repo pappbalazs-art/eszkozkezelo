@@ -46,12 +46,13 @@ export default function AdminNavbarContent(): ReactNode {
 									Beállítások
 								</DropdownMenuLink>
 							</DropdownMenuItem>
-							<DropdownMenuItem>
+							<DropdownMenuItem
+								color="danger"
+								onClick={handleSignOut}
+							>
 								<DropdownMenuLink
-									href="#"
-									color="danger"
+									href=""
 									icon={<SignOutIcon />}
-									onClick={handleSignOut}
 								>
 									Kijelentkezés
 								</DropdownMenuLink>

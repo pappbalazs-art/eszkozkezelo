@@ -6,10 +6,13 @@ import "./button.scss";
 import { Spinner } from "../spinner";
 
 type ButtonVariants = "solid";
+type ButtonSizes = "default" | "compact";
 type ButtonProps = {
 	variant?: ButtonVariants;
+	size?: ButtonSizes;
 	color?: Color;
 	fullWidth?: boolean;
+	startContent?: ReactNode;
 	isDisabled?: boolean;
 	isLoading?: boolean;
 	onClick?: MouseEventHandler<HTMLButtonElement>;
@@ -18,8 +21,10 @@ type ButtonProps = {
 
 export default function Button({
 	variant = "solid",
+	size = "default",
 	color = "primary",
 	fullWidth = false,
+	startContent,
 	isDisabled = false,
 	isLoading = false,
 	onClick,
@@ -29,6 +34,7 @@ export default function Button({
 		return clsx(
 			"button",
 			"button--" + variant,
+			"button--" + size,
 			"button--" + color,
 			fullWidth && "button--full-width"
 		);
@@ -43,6 +49,7 @@ export default function Button({
 		>
 			<div className="button__container">
 				{isLoading && <Spinner />}
+				{startContent}
 				{children}
 			</div>
 		</button>

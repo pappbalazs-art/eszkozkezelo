@@ -1,14 +1,11 @@
 import { IconProps } from "@/types/icon-props";
 import { ReactNode } from "react";
 
-export default function SettingsIcon({
-	size = 1,
-	sizeUnit = "rem",
-}: IconProps): ReactNode {
+export default function SettingsIcon({ size = 14 }: IconProps): ReactNode {
 	return (
 		<svg
 			className="icon icon--settings"
-			height={size + sizeUnit}
+			height={size + "px"}
 			aria-hidden="true"
 			focusable="false"
 			role="img"

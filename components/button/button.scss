@@ -32,6 +32,10 @@
 		width: 100%;
 	}
 
+	&--compact {
+		padding: 0.6rem 1.5rem;
+	}
+
 	&:disabled {
 		cursor: default;
 	}
@@ -52,5 +56,9 @@
 		&.button--danger {
 			@include button-background(colors.$danger);
 		}
+	}
+
+	.icon {
+		fill: colors.$background;
 	}
 }

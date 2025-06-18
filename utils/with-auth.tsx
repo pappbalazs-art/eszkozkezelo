@@ -7,16 +7,16 @@ import { useAuth } from "@/providers/auth-context";
 
 const withAuth = (WrappedComponent: FC): any => {
 	const ComponentWithAuth = (props: any): ReactNode => {
-		const { user } = useAuth();
+		const { isAuthenticated } = useAuth();
 		const router = useRouter();
 
 		useEffect(() => {
-			if (!user) {
+			if (!isAuthenticated) {
 				router.push("/sign-in");
 			}
-		}, [user, router]);
+		}, [isAuthenticated, router]);
 
-		if (!user) {
+		if (!isAuthenticated) {
 			return null;
 		}
 

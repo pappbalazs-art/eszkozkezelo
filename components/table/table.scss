@@ -1,0 +1,9 @@
+.table__wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+	animation-name: fade;
+	animation-duration: 0.3s;
+	animation-fill-mode: backwards;
+	animation-timing-function: ease-out;
+}

@@ -6,4 +6,8 @@
 	align-content: center;
 	justify-content: center;
 	height: variables.$navbar-height;
+
+	.dropdown__menu {
+		top: 2.5rem;
+	}
 }

@@ -13,25 +13,30 @@ import "./input.scss";
 import { FormContext } from "../form";
 
 type InputVariants = "solid" | "bordered";
+type InputSizes = "default" | "compact";
 type InputType = "text" | "email" | "password" | "search";
 type InputLabelPlacementType = "inside" | "outside";
 
 type InputProps = {
+	className?: string;
 	variant?: InputVariants;
+	size?: InputSizes;
 	type: InputType;
 	required?: boolean;
 	label?: string;
 	labelPlacement?: InputLabelPlacementType;
 	name: string;
-	value?: string;
+	value: string;
 	defaultValue?: string;
-	onValueChange?: Dispatch<SetStateAction<string>>;
+	onValueChange: Dispatch<SetStateAction<string>>;
 	autofill?: AutoFill;
 	fullWidth?: boolean;
 };
 
 export default function Input({
+	className,
 	variant = "bordered",
+	size = "default",
 	type,
 	required = false,
 	label,
@@ -49,8 +54,10 @@ export default function Input({
 
 	const getInputClassNames = (): string => {
 		return clsx(
+			className,
 			"input",
 			"input--" + variant,
+			"input--" + size,
 			required && "input--required",
 			fullWidth && "input--full-width"
 		);
@@ -69,12 +76,11 @@ export default function Input({
 	};
 
 	const handleValueChange = (e: ChangeEvent<HTMLInputElement>): void => {
-		if (!onValueChange) {
-			return;
-		}
-
-		setError(name, "");
 		onValueChange(e.target.value);
+
+		if (required) {
+			setError(name, "");
+		}
 	};
 
 	const handleBlur = (): void => {
@@ -86,7 +92,7 @@ export default function Input({
 	return (
 		<div
 			className={getInputClassNames()}
-			{...(errors[name] && { "data-error": errors[name] })}
+			{...(errors && errors[name] && { "data-error": errors[name] })}
 		>
 			<input
 				ref={inputRef}

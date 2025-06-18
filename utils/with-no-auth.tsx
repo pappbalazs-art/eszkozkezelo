@@ -7,16 +7,16 @@ import { useAuth } from "@/providers/auth-context";
 
 const withNoAuth = (WrappedComponent: FC): any => {
 	const ComponentWithNoAuth = (props: any): ReactNode => {
-		const { user } = useAuth();
+		const { isAuthenticated } = useAuth();
 		const router = useRouter();
 
 		useEffect(() => {
-			if (user) {
+			if (isAuthenticated) {
 				router.push("/");
 			}
-		}, [user, router]);
+		}, [isAuthenticated, router]);
 
-		if (user) {
+		if (isAuthenticated) {
 			return null;
 		}
 

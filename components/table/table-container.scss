@@ -1,0 +1,11 @@
+@use "sass:color";
+@use "@/styles/colors";
+
+.table__container {
+	border-spacing: 0;
+	border-collapse: separate;
+	width: 100%;
+	padding: 1.5rem;
+	border-radius: 2rem;
+	background: colors.$element-background-primary;
+}

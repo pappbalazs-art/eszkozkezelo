@@ -1,10 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { Providers } from "./providers";
-import { Navbar } from "@/components/navbar";
+import { Navigation } from "@/components/navigation";
 
 import "@/styles/normalize.scss";
 import "@/styles/globals.scss";
+import "@/styles/animations.scss";
 import "./layout.scss";
 
 export const metadata: Metadata = {
@@ -52,7 +53,7 @@ export default function RootLayout({
 		<html>
 			<body className={inter.className}>
 				<Providers>
-					<Navbar />
+					<Navigation />
 
 					<main className="wrapper">{children}</main>
 				</Providers>

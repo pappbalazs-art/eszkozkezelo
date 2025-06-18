@@ -1,11 +1,37 @@
 @use "@/styles/variables.scss";
+@use "@/styles/colors.scss";
+@use "@/styles/mixins.scss";
 
 .container {
 	display: flex;
-	justify-content: center;
+	flex-direction: column;
+	gap: 1.5rem;
+	width: 100vw;
 	height: calc(100vh - variables.$navbar-height);
+	overflow: scroll;
+
+	.sidebar__wrapper ~ .wrapper &:not(.container--centered) {
+		width: calc(100vw - variables.$sidebar-width - 1rem - 2 * 3rem);
+		height: calc(100vh - variables.$navbar-height - 1rem - 2 * 3rem);
+		padding: 3rem;
+		background: colors.$background;
+		border-radius: 1rem;
+
+		@include mixins.breakpoint(medium) {
+			width: 100vw;
+			height: calc(100vh - variables.$navbar-height);
+			border-radius: 0;
+			padding: 25px;
+		}
+	}
 
 	&--centered {
+		display: flex;
 		align-items: center;
+		justify-content: center;
+	}
+
+	@include mixins.breakpoint(medium) {
+		width: 100vw;
 	}
 }

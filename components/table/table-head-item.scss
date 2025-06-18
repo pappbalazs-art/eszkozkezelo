@@ -1,0 +1,37 @@
+@use "@/styles/colors";
+
+.table__head__item {
+	font-weight: 400;
+	text-align: left;
+	text-transform: uppercase;
+	color: colors.$element-foreground-primary;
+	padding: 0.7rem 1.5rem;
+
+	&:has(.table__sort__arrow) {
+		cursor: pointer;
+	}
+}
+
+.table__sort__arrow {
+	margin-left: 0.3rem;
+	opacity: 0;
+	transition: opacity 0.2s ease-in-out;
+
+	&.ascending,
+	&.descending {
+		visibility: visible;
+		opacity: 1;
+	}
+
+	.icon {
+		transition: transform 0.25s ease-in-out;
+	}
+
+	&.ascending .icon {
+		transform: rotate(180deg);
+	}
+
+	&.descending .icon {
+		transform: rotate(0deg);
+	}
+}

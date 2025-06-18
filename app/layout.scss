@@ -1,6 +1,20 @@
 @use "@/styles/variables.scss";
+@use "@/styles/mixins.scss";
+@use "@/styles/colors.scss";
 
 .wrapper {
-	width: 100%;
-	padding-top: variables.$navbar-height;
+	position: relative;
+	top: variables.$navbar-height;
+	width: 100vw;
+	height: calc(100vh - variables.$navbar-height);
+
+	.sidebar__wrapper ~ & {
+		left: variables.$sidebar-width;
+		width: calc(100vw - variables.$sidebar-width);
+		background: colors.$element-background-primary;
+
+		@include mixins.breakpoint(medium) {
+			left: 0;
+		}
+	}
 }

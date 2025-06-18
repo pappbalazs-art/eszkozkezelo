@@ -1,14 +1,11 @@
 import { IconProps } from "@/types/icon-props";
 import { ReactNode } from "react";
 
-export default function SearchIcon({
-	size = 1,
-	sizeUnit = "rem",
-}: IconProps): ReactNode {
+export default function SearchIcon({ size = 14 }: IconProps): ReactNode {
 	return (
 		<svg
 			className="icon icon--search"
-			height={size + sizeUnit}
+			height={size}
 			aria-hidden="true"
 			focusable="false"
 			role="img"

@@ -1,4 +1,62 @@
+@use "sass:color";
+@use "@/styles/colors";
+
+@mixin dropdown-menu-item-color($color, $hover-color: 0) {
+	color: $color;
+
+	&:hover {
+		@if $hover-color == 0 {
+			background: color.adjust($color, $lightness: 45%);
+		} @else {
+			background-color: $hover-color;
+		}
+	}
+
+	.dropdown__menu__link {
+		color: $color;
+
+		.icon {
+			fill: $color;
+		}
+	}
+}
+
 .dropdown__menu__item {
-	display: flex;
-	flex-direction: column;
+	font-size: 0.9rem;
+	border-radius: 3rem;
+	cursor: pointer;
+	transition: background-color 0.2s ease-in-out;
+	@include dropdown-menu-item-color(
+		colors.$foreground,
+		colors.$element-background-secondary
+	);
+
+	.dropdown.open & {
+		animation-name: fade-down;
+		animation-duration: 0.25s;
+		animation-fill-mode: backwards;
+		animation-timing-function: ease-out;
+	}
+
+	@for $i from 1 through 10 {
+		&:nth-child(#{$i}) {
+			animation-delay: #{$i * 0.025}s;
+		}
+	}
+
+	&.color-primary {
+		@include dropdown-menu-item-color(colors.$primary);
+	}
+
+	&.color-success {
+		@include dropdown-menu-item-color(colors.$success);
+	}
+
+	&.color-warning {
+		@include dropdown-menu-item-color(colors.$warning);
+	}
+
+	&.color-danger {
+		@include dropdown-menu-item-color(colors.$danger);
+	}
 }
