@@ -1,9 +1,9 @@
-import { ReactElement, ReactNode, useContext } from "react";
+import { ReactNode, useContext } from "react";
+import clsx from "clsx";
+import { Color } from "@/types/color";
+import { DropdownContext } from "./dropdown";
 
 import "./dropdown-menu-item.scss";
-import { Color } from "@/types/color";
-import clsx from "clsx";
-import { DropdownContext } from "./dropdown";
 
 type DropdownMenuItemProps = {
 	color?: Color;

@@ -1,0 +1,23 @@
+.modal__wrapper {
+	visibility: hidden;
+	transition: visibility 0.25s;
+
+	&.open {
+		visibility: visible;
+
+		.modal__background {
+			background: rgba(0, 0, 0, 0.35);
+		}
+	}
+
+	.modal__background {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		background: transparent;
+		z-index: 999;
+		transition: background-color 0.25s ease-in-out;
+	}
+}

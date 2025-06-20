@@ -10,7 +10,6 @@ import {
 import withAdminAuth from "@/utils/with-admin-auth";
 import { Container, ContainerTitle } from "@/components/container";
 import { Category } from "@/types/category";
-import fetchCategories from "@/hooks/fetch-categories";
 import {
 	Table,
 	TableBody,
@@ -34,10 +33,18 @@ import {
 	DropdownMenuLink,
 	DropdownTrigger,
 } from "@/components/dropdown";
+import { CreateCategoryModal } from "@/components/modals/categories";
+import { useDisclosure } from "@/utils/use-disclosure";
+import { fetchCategories } from "@/hooks/categories";
 
 function CategoriesPage(): ReactNode {
 	const [categories, setCategories] = useState<Array<Category>>([]);
+	const [selectedCategory, setSelectedCategory] = useState<Category>(
+		{} as Category
+	);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
+
+	const createCategoryModalDisclosure = useDisclosure();
 
 	const tableColumns: Array<TableColumnType> = [
 		{
@@ -59,6 +66,7 @@ function CategoriesPage(): ReactNode {
 
 	const fetchData = useCallback(async (): Promise<void> => {
 		const { data } = await fetchCategories();
+
 		setCategories(data);
 		setIsLoading(false);
 	}, []);
@@ -68,59 +76,71 @@ function CategoriesPage(): ReactNode {
 	}, [fetchData]);
 
 	return (
-		<Container>
-			<ContainerTitle>Kategóriák</ContainerTitle>
+		<>
+			<CreateCategoryModal
+				isOpen={createCategoryModalDisclosure.isOpen}
+				close={createCategoryModalDisclosure.close}
+				updateData={fetchData}
+			/>
 
-			<Table
-				items={categories}
-				columns={tableColumns}
-				hasSearchBar
-				searchFilter={searchFilter}
-				isLoading={isLoading}
-			>
-				<TableHeader>
-					<Button size="compact" startContent={<PlusIcon />}>
-						Kategória hozzáadása
-					</Button>
-				</TableHeader>
-				<TableContainer>
-					<TableBody>
-						{(category: Category): ReactElement => (
-							<TableRow>
-								<TableColumn>{category.name}</TableColumn>
-								<TableColumn>{category.length}</TableColumn>
-								<TableColumn>
-									<Dropdown>
-										<DropdownTrigger>
-											<EllipsisIcon />
-										</DropdownTrigger>
+			<Container>
+				<ContainerTitle>Kategóriák</ContainerTitle>
 
-										<DropdownMenu>
-											<DropdownMenuItem>
-												<DropdownMenuLink
-													href=""
-													icon={<EditIcon />}
-												>
-													Szerkesztés
-												</DropdownMenuLink>
-											</DropdownMenuItem>
-											<DropdownMenuItem color="danger">
-												<DropdownMenuLink
-													href=""
-													icon={<DeleteIcon />}
-												>
-													Törlés
-												</DropdownMenuLink>
-											</DropdownMenuItem>
-										</DropdownMenu>
-									</Dropdown>
-								</TableColumn>
-							</TableRow>
-						)}
-					</TableBody>
-				</TableContainer>
-			</Table>
-		</Container>
+				<Table
+					items={categories}
+					columns={tableColumns}
+					hasSearchBar
+					searchFilter={searchFilter}
+					isLoading={isLoading}
+				>
+					<TableHeader>
+						<Button
+							size="compact"
+							startContent={<PlusIcon />}
+							onClick={createCategoryModalDisclosure.open}
+						>
+							Kategória hozzáadása
+						</Button>
+					</TableHeader>
+					<TableContainer>
+						<TableBody>
+							{(category: Category): ReactElement => (
+								<TableRow>
+									<TableColumn>{category.name}</TableColumn>
+									<TableColumn>{category.length}</TableColumn>
+									<TableColumn>
+										<Dropdown>
+											<DropdownTrigger>
+												<EllipsisIcon />
+											</DropdownTrigger>
+
+											<DropdownMenu>
+												<DropdownMenuItem>
+													<DropdownMenuLink
+														href=""
+														icon={<EditIcon />}
+													>
+														Szerkesztés
+													</DropdownMenuLink>
+												</DropdownMenuItem>
+												<DropdownMenuItem color="danger">
+													<DropdownMenuLink
+														href=""
+														icon={<DeleteIcon />}
+													>
+														Törlés
+													</DropdownMenuLink>
+												</DropdownMenuItem>
+											</DropdownMenu>
+										</Dropdown>
+									</TableColumn>
+								</TableRow>
+							)}
+						</TableBody>
+					</TableContainer>
+				</Table>
+			</Container>
+		</>
 	);
 }
 

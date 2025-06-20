@@ -1,7 +1,7 @@
 @use "sass:color";
 
-$background: #fafafa;
-$element-background-primary: color.adjust($background, $lightness: 3%);
+$background: #f9f9f9;
+$element-background-primary: color.adjust($background, $lightness: 10%);
 $element-background-secondary: color.adjust($background, $lightness: -2%);
 $foreground: #010101;
 $element-foreground-primary: color.adjust($foreground, $lightness: 50%);

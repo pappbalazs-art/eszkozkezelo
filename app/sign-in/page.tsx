@@ -23,7 +23,7 @@ function SignInPage(): ReactNode {
 
 	const router = useRouter();
 
-	const isButtonDisabled = (): boolean => {
+	const isSubmitButtonDisabled = (): boolean => {
 		return !(email && password);
 	};
 
@@ -91,7 +91,7 @@ function SignInPage(): ReactNode {
 						<Button
 							fullWidth
 							isLoading={isLoading}
-							isDisabled={isButtonDisabled()}
+							isDisabled={isSubmitButtonDisabled()}
 						>
 							Bejelentkezés
 						</Button>

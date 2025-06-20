@@ -1,0 +1,31 @@
+@use "@/styles/colors.scss";
+@use "@/styles/mixins.scss";
+@use "@/styles/variables.scss";
+
+.modal__container {
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%) scale(0.7);
+	scale: 120%;
+	width: variables.$modal-width;
+	padding: 2rem;
+	border-radius: 2rem;
+	background: colors.$element-background-primary;
+	opacity: 0;
+	z-index: 1000;
+	transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+
+	.modal__wrapper.open & {
+		transform: translate(-50%, -50%) scale(1);
+		opacity: 1;
+	}
+
+	@include mixins.breakpoint(small) {
+		padding: 25px;
+		width: calc(95vw - 2rem);
+	}
+}

@@ -53,7 +53,7 @@ export default function TableHeadItem({
 				<span
 					className={clsx("table__sort__arrow", sortArrowDirection())}
 				>
-					<ChevronDownIcon size={0.7} sizeUnit="rem" />
+					<ChevronDownIcon size={11} />
 				</span>
 			)}
 		</th>
