@@ -3,4 +3,5 @@ export type Item = {
 	name: string;
 	serial_number: string;
 	category_uid: string;
+	category_name?: string;
 };
