@@ -3,10 +3,11 @@
 @use "@/styles/colors.scss";
 
 .wrapper {
-	position: relative;
+	position: absolute;
 	top: variables.$navbar-height;
 	width: 100vw;
 	height: calc(100vh - variables.$navbar-height);
+	overflow: hidden;
 
 	.sidebar__wrapper ~ & {
 		left: variables.$sidebar-width;

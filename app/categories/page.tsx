@@ -8,8 +8,8 @@ import {
 	useState,
 } from "react";
 import withAdminAuth from "@/utils/with-admin-auth";
-import { Container, ContainerTitle } from "@/components/container";
 import { Category } from "@/types/category";
+import { Container, ContainerTitle } from "@/components/container";
 import {
 	Table,
 	TableBody,
@@ -33,7 +33,11 @@ import {
 	DropdownMenuLink,
 	DropdownTrigger,
 } from "@/components/dropdown";
-import { CreateCategoryModal } from "@/components/modals/categories";
+import {
+	CreateCategoryModal,
+	DeleteCategoryModal,
+	EditCategoryModal,
+} from "@/components/modals/categories";
 import { useDisclosure } from "@/utils/use-disclosure";
 import { fetchCategories } from "@/hooks/categories";
 
@@ -45,6 +49,8 @@ function CategoriesPage(): ReactNode {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	const createCategoryModalDisclosure = useDisclosure();
+	const deleteCategoryModalDisclosure = useDisclosure();
+	const editCategoryModalDisclosure = useDisclosure();
 
 	const tableColumns: Array<TableColumnType> = [
 		{
@@ -83,6 +89,20 @@ function CategoriesPage(): ReactNode {
 				updateData={fetchData}
 			/>
 
+			<DeleteCategoryModal
+				isOpen={deleteCategoryModalDisclosure.isOpen}
+				close={deleteCategoryModalDisclosure.close}
+				category={selectedCategory}
+				updateData={fetchData}
+			/>
+
+			<EditCategoryModal
+				isOpen={editCategoryModalDisclosure.isOpen}
+				close={editCategoryModalDisclosure.close}
+				category={selectedCategory}
+				updateData={fetchData}
+			/>
+
 			<Container>
 				<ContainerTitle>Kategóriák</ContainerTitle>
 
@@ -115,7 +135,14 @@ function CategoriesPage(): ReactNode {
 											</DropdownTrigger>
 
 											<DropdownMenu>
-												<DropdownMenuItem>
+												<DropdownMenuItem
+													onClick={() => {
+														setSelectedCategory(
+															category
+														);
+														editCategoryModalDisclosure.open();
+													}}
+												>
 													<DropdownMenuLink
 														href=""
 														icon={<EditIcon />}
@@ -123,7 +150,15 @@ function CategoriesPage(): ReactNode {
 														Szerkesztés
 													</DropdownMenuLink>
 												</DropdownMenuItem>
-												<DropdownMenuItem color="danger">
+												<DropdownMenuItem
+													color="danger"
+													onClick={() => {
+														setSelectedCategory(
+															category
+														);
+														deleteCategoryModalDisclosure.open();
+													}}
+												>
 													<DropdownMenuLink
 														href=""
 														icon={<DeleteIcon />}

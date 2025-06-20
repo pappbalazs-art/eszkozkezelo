@@ -18,8 +18,6 @@ export function useDisclosure(): UseDisclosureType {
 	}, [isOpen, setIsOpen]);
 
 	const close = useCallback((): void => {
-		console.log("close");
-
 		if (!isOpen) {
 			return;
 		}

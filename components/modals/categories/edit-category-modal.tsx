@@ -1,7 +1,6 @@
 import { ReactNode, useCallback, useEffect, useState } from "react";
-import { Button } from "@/components/button";
+import { Category } from "@/types/category";
 import { Form, FormError } from "@/components/form";
-import { Input } from "@/components/input";
 import {
 	Modal,
 	ModalContainer,
@@ -9,19 +8,23 @@ import {
 	ModalTitle,
 	ModalBody,
 } from "@/components/modal";
-import { createCategory } from "@/hooks/categories";
+import { Input } from "@/components/input";
+import { Button } from "@/components/button";
+import { updateCategory } from "@/hooks/categories";
 
-type CreateCategoryModalProps = {
+type EditCategoryModalProps = {
 	isOpen: boolean;
 	close: () => void;
+	category: Category;
 	updateData: () => Promise<void>;
 };
 
-export default function CreateCategoryModal({
+export default function EditCategoryModal({
 	isOpen,
 	close,
+	category,
 	updateData,
-}: CreateCategoryModalProps): ReactNode {
+}: EditCategoryModalProps): ReactNode {
 	const [name, setName] = useState<string>("");
 	const [errors, setErrors] = useState<FormError>({});
 	const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -30,21 +33,28 @@ export default function CreateCategoryModal({
 		return !name;
 	};
 
-	const handleCreateCategory = useCallback(async (): Promise<void> => {
+	const handleUpdateCategory = useCallback(async (): Promise<void> => {
 		setIsLoading(true);
 
-		await createCategory({ name });
+		await updateCategory(category.id, { name });
 		await updateData();
 
 		close();
-	}, [setIsLoading, close, updateData, name]);
+	}, [setIsLoading, close, updateData, category, name]);
+
+	useEffect(() => {
+		if (!("name" in category)) {
+			return;
+		}
+
+		setName(category.name);
+	}, [category]);
 
 	useEffect(() => {
 		if (!isOpen) {
 			return;
 		}
 
-		setName("");
 		setIsLoading(false);
 	}, [isOpen]);
 
@@ -52,13 +62,13 @@ export default function CreateCategoryModal({
 		<Modal isOpen={isOpen} close={close}>
 			<ModalContainer>
 				<ModalHeader>
-					<ModalTitle>Kategória hozzáadása</ModalTitle>
+					<ModalTitle>Kategória szerkesztése</ModalTitle>
 				</ModalHeader>
 				<ModalBody>
 					<Form
 						errors={errors}
 						setErrors={setErrors}
-						handleSubmit={handleCreateCategory}
+						handleSubmit={handleUpdateCategory}
 					>
 						<Input
 							type="text"
@@ -75,7 +85,7 @@ export default function CreateCategoryModal({
 							isLoading={isLoading}
 							isDisabled={isSubmitButtonDisabled()}
 						>
-							Új kategória hozzáadása
+							Mentés
 						</Button>
 					</Form>
 				</ModalBody>
