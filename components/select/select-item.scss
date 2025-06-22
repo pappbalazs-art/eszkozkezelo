@@ -1,0 +1,13 @@
+@use "@/styles/colors.scss";
+
+.select__menu__item {
+	font-size: 0.9rem;
+	padding: 0.6rem 0.9rem;
+	border-radius: 3rem;
+	cursor: pointer;
+	transition: background-color 0.2s ease-in-out;
+
+	&:hover {
+		background: colors.$element-background-secondary;
+	}
+}

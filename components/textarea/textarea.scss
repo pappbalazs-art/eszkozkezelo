@@ -1,0 +1,86 @@
+@use "@/styles/colors.scss";
+@use "@/styles/variables.scss";
+
+.textarea {
+	position: relative;
+	width: 100%;
+
+	&:not(.textarea--full-width) {
+		max-width: 350px;
+	}
+
+	&__field {
+		width: calc(100% - 1.5rem * 2);
+		height: 6rem;
+		padding: 1rem 1.5rem;
+		border-radius: 2rem;
+		border: 2px solid colors.$element-foreground-secondary;
+		cursor: text;
+		z-index: 0;
+		transition: background-color 0.2s, border 0.2s;
+
+		&:-webkit-autofill {
+			&,
+			&:hover,
+			&:focus {
+				-webkit-text-fill-color: colors.$foreground;
+				-webkit-box-shadow: 0 0 0 40rem
+					colors.$element-background-primary inset;
+			}
+		}
+
+		&:focus {
+			border: 2px solid colors.$primary;
+		}
+	}
+
+	&__label {
+		position: absolute;
+		top: calc(1rem + 2px);
+		left: calc(1.5rem - 2px);
+		color: colors.$element-foreground-primary;
+		padding: 0 0.3rem;
+		cursor: text;
+		transition: top 0.15s, left 0.15s, font-size 0.15s,
+			background-color 0.15s;
+
+		.textarea--required &::after {
+			content: "*";
+			color: colors.$danger;
+			margin-left: 0.1rem;
+		}
+
+		.textarea__field:not(:empty) + &--inside {
+			visibility: hidden;
+		}
+
+		.textarea__field:not(:empty) + &--outside,
+		.textarea__field:focus + &--outside {
+			top: -0.35rem;
+			left: calc(1.5rem - 2px);
+			font-size: 0.8rem;
+			background-color: colors.$element-background-primary;
+		}
+
+		.textarea__field:focus + & {
+			color: colors.$primary;
+		}
+	}
+
+	&[data-error] {
+		.textarea__field {
+			margin-bottom: 0.25rem;
+			border: 2px solid colors.$danger;
+		}
+
+		.textarea__label {
+			color: colors.$danger;
+		}
+
+		&::after {
+			content: attr(data-error);
+			font-size: 0.8rem;
+			color: colors.$danger;
+		}
+	}
+}

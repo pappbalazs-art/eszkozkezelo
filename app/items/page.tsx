@@ -23,6 +23,7 @@ import { fetchItems } from "@/hooks/items";
 import { Button } from "@/components/button";
 import {
 	DeleteIcon,
+	DetailsIcon,
 	EditIcon,
 	EllipsisIcon,
 	PlusIcon,
@@ -34,11 +35,15 @@ import {
 	DropdownMenuLink,
 	DropdownTrigger,
 } from "@/components/dropdown";
+import { useDisclosure } from "@/utils/use-disclosure";
+import { CreateItemModal } from "@/components/modals/items";
 
 function ItemsPage(): ReactNode {
 	const [items, setItems] = useState<Array<Item>>([]);
-	const [selectedItem, setSelectedItem] = useState<Item>({} as Item);
+	//const [selectedItem, setSelectedItem] = useState<Item>({} as Item);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
+
+	const createItemModalDisclosure = useDisclosure();
 
 	const tableColumns: Array<TableColumnType> = [
 		{
@@ -74,60 +79,81 @@ function ItemsPage(): ReactNode {
 	}, [fetchData]);
 
 	return (
-		<Container>
-			<ContainerTitle>Eszközök</ContainerTitle>
+		<>
+			<CreateItemModal
+				isOpen={createItemModalDisclosure.isOpen}
+				close={createItemModalDisclosure.close}
+				updateData={fetchData}
+			/>
 
-			<Table
-				items={items}
-				columns={tableColumns}
-				hasSearchBar
-				searchFilter={searchFilter}
-				isLoading={isLoading}
-			>
-				<TableHeader>
-					<Button size="compact" startContent={<PlusIcon />}>
-						Eszköz hozzáadása
-					</Button>
-				</TableHeader>
-				<TableContainer>
-					<TableBody>
-						{(item: Item): ReactElement => (
-							<TableRow>
-								<TableColumn>{item.name}</TableColumn>
-								<TableColumn>{item.serial_number}</TableColumn>
-								<TableColumn>{item.category_name}</TableColumn>
-								<TableColumn>
-									<Dropdown>
-										<DropdownTrigger>
-											<EllipsisIcon />
-										</DropdownTrigger>
+			<Container>
+				<ContainerTitle>Eszközök</ContainerTitle>
 
-										<DropdownMenu>
-											<DropdownMenuItem>
-												<DropdownMenuLink
-													href=""
-													icon={<EditIcon />}
-												>
-													Szerkesztés
-												</DropdownMenuLink>
-											</DropdownMenuItem>
-											<DropdownMenuItem color="danger">
-												<DropdownMenuLink
-													href=""
-													icon={<DeleteIcon />}
-												>
-													Törlés
-												</DropdownMenuLink>
-											</DropdownMenuItem>
-										</DropdownMenu>
-									</Dropdown>
-								</TableColumn>
-							</TableRow>
-						)}
-					</TableBody>
-				</TableContainer>
-			</Table>
-		</Container>
+				<Table
+					items={items}
+					columns={tableColumns}
+					hasSearchBar
+					searchFilter={searchFilter}
+					isLoading={isLoading}
+				>
+					<TableHeader>
+						<Button
+							size="compact"
+							startContent={<PlusIcon />}
+							onClick={createItemModalDisclosure.open}
+						>
+							Eszköz hozzáadása
+						</Button>
+					</TableHeader>
+					<TableContainer>
+						<TableBody>
+							{(item: Item): ReactElement => (
+								<TableRow>
+									<TableColumn>{item.name}</TableColumn>
+									<TableColumn>
+										{item.serial_number || "–"}
+									</TableColumn>
+									<TableColumn>
+										{item.category_name}
+									</TableColumn>
+									<TableColumn>
+										<Dropdown>
+											<DropdownTrigger>
+												<EllipsisIcon />
+											</DropdownTrigger>
+
+											<DropdownMenu>
+												<DropdownMenuItem>
+													<DropdownMenuLink
+														icon={<DetailsIcon />}
+													>
+														Részletek
+													</DropdownMenuLink>
+												</DropdownMenuItem>
+												<DropdownMenuItem>
+													<DropdownMenuLink
+														icon={<EditIcon />}
+													>
+														Szerkesztés
+													</DropdownMenuLink>
+												</DropdownMenuItem>
+												<DropdownMenuItem color="danger">
+													<DropdownMenuLink
+														icon={<DeleteIcon />}
+													>
+														Törlés
+													</DropdownMenuLink>
+												</DropdownMenuItem>
+											</DropdownMenu>
+										</Dropdown>
+									</TableColumn>
+								</TableRow>
+							)}
+						</TableBody>
+					</TableContainer>
+				</Table>
+			</Container>
+		</>
 	);
 }
 

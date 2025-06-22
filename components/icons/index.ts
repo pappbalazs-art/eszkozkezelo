@@ -2,6 +2,7 @@ import CategoriesIcon from "./categories-icon";
 import ChevronDownIcon from "./chevron-down-icon";
 import CloseIcon from "./close-icon";
 import DeleteIcon from "./delete-icon";
+import DetailsIcon from "./details-icon";
 import EditIcon from "./edit-icon";
 import EllipsisIcon from "./ellipsis-icon";
 import HomeIcon from "./home-icon";
@@ -17,6 +18,7 @@ export {
 	ChevronDownIcon,
 	CloseIcon,
 	DeleteIcon,
+	DetailsIcon,
 	EditIcon,
 	EllipsisIcon,
 	HomeIcon,

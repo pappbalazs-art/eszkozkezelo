@@ -1,0 +1,128 @@
+@use "@/styles/colors.scss";
+@use "@/styles/variables.scss";
+
+.select {
+	position: relative;
+	width: 100%;
+
+	&:not(.select--full-width) {
+		max-width: 350px;
+	}
+
+	&__field {
+		width: calc(100% - 1.5rem * 2);
+		padding: 1rem 1.5rem;
+		border-radius: 3rem;
+		border: 2px solid colors.$element-foreground-secondary;
+		cursor: text;
+		z-index: 0;
+		transition: background-color 0.2s, border 0.2s;
+
+		&:-webkit-autofill {
+			&,
+			&:hover,
+			&:focus {
+				-webkit-text-fill-color: colors.$foreground;
+				-webkit-box-shadow: 0 0 0 40rem
+					colors.$element-background-primary inset;
+			}
+		}
+
+		&:focus {
+			border: 2px solid colors.$primary;
+		}
+	}
+
+	&__label {
+		position: absolute;
+		top: calc(1rem + 2px);
+		left: calc(1.5rem - 2px);
+		color: colors.$element-foreground-primary;
+		padding: 0 0.3rem;
+		cursor: text;
+		transition: top 0.15s, left 0.15s, font-size 0.15s,
+			background-color 0.15s;
+
+		.select--required &::after {
+			content: "*";
+			color: colors.$danger;
+			margin-left: 0.1rem;
+		}
+
+		.select__field:not([value=""]) + &--inside {
+			visibility: hidden;
+		}
+
+		.select__field:not([value=""]) + &--outside,
+		.select__field:focus + &--outside {
+			top: -0.35rem;
+			left: calc(1.5rem - 2px);
+			font-size: 0.8rem;
+			background-color: colors.$element-background-primary;
+		}
+
+		.select__field:focus + & {
+			color: colors.$primary;
+		}
+	}
+
+	&[data-error] {
+		.select__field {
+			margin-bottom: 0.25rem;
+			border: 2px solid colors.$danger;
+		}
+
+		.select__label {
+			color: colors.$danger;
+		}
+
+		&::after {
+			content: attr(data-error);
+			font-size: 0.8rem;
+			color: colors.$danger;
+		}
+
+		.icon {
+			fill: colors.$danger;
+		}
+	}
+
+	.icon {
+		position: absolute;
+		top: 1.25rem;
+		right: calc(1.5rem - 2px);
+		fill: colors.$element-foreground-primary;
+		transition: transform 0.2s ease-in-out, fill 0.15s ease-in-out;
+	}
+
+	&.open .icon {
+		transform: rotate(180deg);
+	}
+
+	&__menu {
+		position: absolute;
+		top: 4rem;
+		left: 0;
+		width: calc(100% - 1rem + 4px);
+		height: variables.$select-menu-height;
+		overflow: scroll;
+		visibility: hidden;
+		flex-direction: column;
+		background: colors.$element-background-primary;
+		padding: 0.5rem;
+		border-radius: 1.5rem;
+		list-style: none;
+		box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+		z-index: 998;
+		opacity: 0;
+		transform: translateY(-0.5rem);
+		transition: visibility 0.15s ease-in-out, opacity 0.15s ease-in-out,
+			transform 0.15s ease-in-out;
+
+		.select.open & {
+			visibility: visible;
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+}

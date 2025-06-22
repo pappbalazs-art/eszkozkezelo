@@ -4,7 +4,7 @@ import Link from "next/link";
 import "./dropdown-menu-link.scss";
 
 type DropdownMenuLinkProps = {
-	href: string;
+	href?: string;
 	icon?: ReactElement;
 	children: ReactNode;
 };
@@ -15,7 +15,7 @@ export default function DropdownMenuLink({
 	children,
 }: DropdownMenuLinkProps): ReactNode {
 	return (
-		<Link className="dropdown__menu__link" href={href}>
+		<Link className="dropdown__menu__link" href={href || ""}>
 			{icon && <icon.type size={15} />}
 			{children}
 		</Link>
