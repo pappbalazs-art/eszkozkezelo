@@ -55,7 +55,7 @@ function ItemsPage(): ReactNode {
 			label: "Szériaszám",
 		},
 		{
-			key: "category_uid",
+			key: "category_name",
 			label: "Kategória",
 		},
 		{
