@@ -79,6 +79,7 @@ export default function CreateItemModal({
 		setSerialNumber("");
 		setCategoryId({} as Selection);
 		setDescription("");
+		setErrors({});
 		setIsLoading(false);
 	}, [isOpen]);
 

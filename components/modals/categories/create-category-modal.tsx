@@ -45,6 +45,7 @@ export default function CreateCategoryModal({
 		}
 
 		setName("");
+		setErrors({});
 		setIsLoading(false);
 	}, [isOpen]);
 
