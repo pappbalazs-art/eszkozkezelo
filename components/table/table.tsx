@@ -84,11 +84,10 @@ export default function Table({
 					const first = a[sortDescriptor.key as keyof TableItemTypes];
 					const second =
 						b[sortDescriptor.key as keyof TableItemTypes];
-					const cmp = first < second ? -1 : first > second ? 1 : 0;
 
-					return sortDescriptor.direction === "descending"
-						? -cmp
-						: cmp;
+					return first
+						.toLowerCase()
+						.localeCompare(second.toLowerCase());
 				}
 			);
 		}, [sortDescriptor, filteredItems]);
