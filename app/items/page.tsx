@@ -68,9 +68,9 @@ function ItemsPage(): ReactNode {
 	};
 
 	const fetchData = useCallback(async (): Promise<void> => {
-		const { data } = await fetchItems();
+		const { data: items } = await fetchItems();
 
-		setItems(data);
+		setItems(items);
 		setIsLoading(false);
 	}, []);
 

@@ -71,9 +71,9 @@ function CategoriesPage(): ReactNode {
 	};
 
 	const fetchData = useCallback(async (): Promise<void> => {
-		const { data } = await fetchCategories();
+		const { data: categories } = await fetchCategories();
 
-		setCategories(data);
+		setCategories(categories);
 		setIsLoading(false);
 	}, []);
 
