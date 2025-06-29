@@ -84,8 +84,13 @@ export default function CreateItemModal({
 
 	useEffect(() => {
 		const fetchCategoriesData = async (): Promise<void> => {
-			const { data } = await fetchCategories();
-			setCategories(data);
+			const { data: categories } = await fetchCategories();
+			const sortedCategories = categories.sort(
+				(a: Category, b: Category) =>
+					a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+			);
+
+			setCategories(sortedCategories);
 		};
 
 		fetchCategoriesData();
