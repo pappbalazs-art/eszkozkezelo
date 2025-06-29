@@ -111,7 +111,7 @@ function ItemsPage(): ReactNode {
 								<TableRow>
 									<TableColumn>{item.name}</TableColumn>
 									<TableColumn>
-										{item.serial_number || "–"}
+										{item.serial_number}
 									</TableColumn>
 									<TableColumn>
 										{item.category_name}

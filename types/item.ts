@@ -13,4 +13,5 @@ export type Item = {
 	category_uid: string;
 	category_name?: string;
 	description?: string;
+	created_by: string;
 };

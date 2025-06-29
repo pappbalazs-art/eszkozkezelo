@@ -33,6 +33,7 @@ export default async function fetchItems(): Promise<Hook<Item>> {
 			return {
 				...doc.data(),
 				id: doc.id,
+				serial_number: doc.data()?.serial_number || "–",
 				category_name: itemCategory?.name || "–",
 			} as Item;
 		}
